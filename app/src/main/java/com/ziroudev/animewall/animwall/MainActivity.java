@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Imagen item = (Imagen) parent.getItemAtPosition(position);
 
         Intent intent = new Intent(this, ActividadDetalle.class);
+//        startActivity(intent);
         intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getIdDrawable());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
