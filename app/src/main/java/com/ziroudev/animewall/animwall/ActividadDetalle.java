@@ -74,7 +74,7 @@ public class ActividadDetalle extends AppCompatActivity {
     }
 
     public void ponerWallpaper(){
-        //cargo la imagen en picasso sin usar Asynctask
+        //cargo la imagen usando picasso
         Picasso.with(getApplicationContext()).load(URLPasada).into(new Target() {
 
             @Override
