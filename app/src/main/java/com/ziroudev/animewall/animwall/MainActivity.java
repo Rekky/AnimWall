@@ -21,14 +21,13 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.AdapterView;
 
-import com.google.android.gms.appindexing.AppIndex;
-import com.google.android.gms.common.api.GoogleApiClient;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private GridView gridView;
     private AdaptadorDeImagen adaptador;
-    private GoogleApiClient client;
+    private String laImagen;
+
     public static Imagen[] ITEMS = {
             new Imagen("la uno", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
             new Imagen("la dos", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
@@ -42,6 +41,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        JSONManager jsonManager = new JSONManager();
+        laImagen = jsonManager.lectura;
+
+        Log.d("hola","SE INICIA LA APP");
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -72,9 +76,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        // ATTENTION: This was auto-generated to implement the App Indexing API.
-        // See https://g.co/AppIndexing/AndroidStudio for more information.
-        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
+
     }
 
     @Override
@@ -114,7 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Imagen item = (Imagen) parent.getItemAtPosition(position);
 
         Intent intent = new Intent(this, ActividadDetalle.class);
-//        startActivity(intent);
         intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getIdDrawable());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -128,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else
             startActivity(intent);
     }
+
 
 
 }
