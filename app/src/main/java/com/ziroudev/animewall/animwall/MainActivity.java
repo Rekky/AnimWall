@@ -21,31 +21,49 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.AdapterView;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private GridView gridView;
     private AdaptadorDeImagen adaptador;
     private String laImagen;
+    private String pathWeb = "http://192.168.2.104:81/generador/wallpapers.php";
+    private String pathImagenes = "http://192.168.2.104:81/generador/wallpapers/";
+    public Imagen[] ITEMS;
+    public ArrayList<Imagen> lista = new ArrayList<Imagen>();
 
-    public static Imagen[] ITEMS = {
-            new Imagen("la uno", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
-            new Imagen("la dos", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
-            new Imagen("la tres", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
-            new Imagen("la cuatro", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
-            new Imagen("la cinco", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
-            new Imagen("la seis", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png")
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        JSONManager jsonManager = new JSONManager();
-        laImagen = jsonManager.lectura;
+        try {
+            DownloadFileTask dwf = new DownloadFileTask();
+            dwf.pathWeb = pathWeb;
+            dwf.pathImagenes = pathImagenes;
+            lista = dwf.execute().get();
+
+            Log.d("hola","ELOBJECTO_IMG:"+lista.get(6));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        Log.d("hola","ELPATH_MAS_IMG:"+pathImagenes + laImagen);
+
+//        ITEMS = new Imagen[]{
+//                new Imagen("la uno", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
+//                new Imagen("la dos", pathImagenes+laImagen)
+//
+//        };
 
         Log.d("hola","SE INICIA LA APP");
+        //Log.d("hola","La imagen"+this.laImagen);
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -60,7 +78,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
         gridView = (GridView) findViewById(R.id.grid);
-        adaptador = new AdaptadorDeImagen(this, ITEMS);
+        adaptador = new AdaptadorDeImagen(this, lista);
         gridView.setAdapter(adaptador);
         gridView.setOnItemClickListener(this);
 
@@ -114,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Imagen item = (Imagen) parent.getItemAtPosition(position);
-
+        Log.d("hola","weqeqwe"+laImagen);
         Intent intent = new Intent(this, ActividadDetalle.class);
         intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getIdDrawable());
 
