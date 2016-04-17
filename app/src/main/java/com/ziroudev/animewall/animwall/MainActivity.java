@@ -22,17 +22,14 @@ import android.widget.GridView;
 import android.widget.AdapterView;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private GridView gridView;
     private AdaptadorDeImagen adaptador;
-    private String laImagen;
     private String pathWeb = "http://192.168.2.104:81/generador/wallpapers.php";
     private String pathImagenes = "http://192.168.2.104:81/generador/wallpapers/";
-    public Imagen[] ITEMS;
     public ArrayList<Imagen> lista = new ArrayList<Imagen>();
 
 
@@ -40,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d("anim","SE INICIA LA APP");
 
         try {
             DownloadFileTask dwf = new DownloadFileTask();
@@ -47,23 +45,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dwf.pathImagenes = pathImagenes;
             lista = dwf.execute().get();
 
-            Log.d("hola","ELOBJECTO_IMG:"+lista.get(6));
+            Log.d("anim","ELOBJECTO_IMG:"+lista.get(6));
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-        Log.d("hola","ELPATH_MAS_IMG:"+pathImagenes + laImagen);
-
-//        ITEMS = new Imagen[]{
-//                new Imagen("la uno", "http://4.bp.blogspot.com/-O1DH4PGWWM4/VaJmMAfAotI/AAAAAAACLOY/sREKCPcPz1Q/s1600/GOD.EATER.2015.WEB.png"),
-//                new Imagen("la dos", pathImagenes+laImagen)
-//
-//        };
-
-        Log.d("hola","SE INICIA LA APP");
-        //Log.d("hola","La imagen"+this.laImagen);
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -132,9 +118,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Imagen item = (Imagen) parent.getItemAtPosition(position);
-        Log.d("hola","weqeqwe"+laImagen);
+
+        Log.d("anim","Se ha seleccionado"+item.getDibujo());
+
         Intent intent = new Intent(this, ActividadDetalle.class);
-        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getIdDrawable());
+        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getDibujo());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat activityOptions =

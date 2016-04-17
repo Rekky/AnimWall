@@ -9,22 +9,19 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by Rekky on 25/03/2016.
- */
 public class AdaptadorDeImagen extends BaseAdapter{
     private Context context;
-    //private Imagen[] urls;
+
     private ArrayList<Imagen> urls = new ArrayList<Imagen>();
 
     public AdaptadorDeImagen(Context context, ArrayList<Imagen> lista){
         this.context = context;
         this.urls = lista;
-        Log.d("hola", "adapter:"+urls.get(0).getIdDrawable());
+        Log.d("anim", "adapter:"+urls.get(0).getDibujo());
     }
 
     @Override
@@ -47,20 +44,15 @@ public class AdaptadorDeImagen extends BaseAdapter{
             view = inflater.inflate(R.layout.grid_item, viewGroup, false);
         }
 
-        ImageView imagenCoche = (ImageView) view.findViewById(R.id.imagen_coche);
-        TextView nombreCoche = (TextView) view.findViewById(R.id.nombre_coche);
-
-//        final Imagen item = getItem(position);
-//        Glide.with(context)
-//            .load(urls[position].getIdDrawable())
-//            .into(imagenCoche);
+        ImageView miniImagen = (ImageView) view.findViewById(R.id.imagen_coche);
+        TextView nombreMiniImagen = (TextView) view.findViewById(R.id.nombre_coche);
 
         final Imagen item = getItem(position);
-        Glide.with(context)
-                .load(urls.get(position).getIdDrawable())
-                .into(imagenCoche);
+        Picasso.with(context)
+                .load(urls.get(position).getDibujo())
+                .into(miniImagen);
 
-        nombreCoche.setText(item.getNombre());
+        nombreMiniImagen.setText(item.getNombre());
 
         return view;
     }

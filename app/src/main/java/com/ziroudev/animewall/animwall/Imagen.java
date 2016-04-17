@@ -1,33 +1,30 @@
 package com.ziroudev.animewall.animwall;
 
-import android.util.Log;
-
 /**
  * Created by Rekky on 25/03/2016.
  */
 public class Imagen {
     private String nombre;
-    private String idDrawable;
+    private String dibujo;
     public static Imagen[] ITEMS;
 
 
     public Imagen(String nombre, String url) {
         this.nombre = nombre;
-        this.idDrawable = url;
+        this.dibujo = url;
     }
 
     public String getNombre() {
         return nombre;
     }
 
-    public String getIdDrawable() {
-        return idDrawable;
+    public String getDibujo() {
+        return dibujo;
     }
 
     public int getId() {
         return nombre.hashCode();
     }
-
 
 
     public static Imagen getItem(int id) {
