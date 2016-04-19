@@ -8,6 +8,7 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
+    android:background="@color/background_footer"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.ziroudev.animewall.animwall.MainActivity"
     tools:showIn="@layout/app_bar_main">

@@ -4,8 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -21,15 +23,25 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.AdapterView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
 
     private GridView gridView;
-    private AdaptadorDeImagen adaptador;
-    private String pathWeb = "http://192.168.2.104:81/generador/wallpapers.php";
-    private String pathImagenes = "http://192.168.2.104:81/generador/wallpapers/";
+    public AdaptadorDeImagen adaptador;
+    private String pathWeb = "http://192.168.0.211:81/generador/wallpapers.php";
+    private String pathImagenes = "http://192.168.0.211:81/generador/wallpapers/";
     public ArrayList<Imagen> lista = new ArrayList<Imagen>();
 
 
@@ -37,24 +49,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.d("anim","SE INICIA LA APP");
-
-        try {
-            DownloadFileTask dwf = new DownloadFileTask();
-            dwf.pathWeb = pathWeb;
-            dwf.pathImagenes = pathImagenes;
-            lista = dwf.execute().get();
-
-            Log.d("anim","ELOBJECTO_IMG:"+lista.get(6));
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
             // Operaciones http
+
+            Log.d("test","SE INICIA LA APP");
+
+            try {
+                DownloadFileTask dwf = new DownloadFileTask();
+                dwf.pathWeb = pathWeb;
+                dwf.pathImagenes = pathImagenes;
+                lista = dwf.execute().get();
+//
+//                Log.d("anim","ELOBJECTO_IMG:"+lista.get(1));
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            gridView = (GridView) findViewById(R.id.grid);
+            adaptador = new AdaptadorDeImagen(getApplicationContext(), lista);
+            gridView.setAdapter(adaptador);
+            gridView.setOnItemClickListener(this);
+
+
         } else {
             // Mostrar errores
             android.app.FragmentManager fragmentManager = getFragmentManager();
@@ -63,10 +83,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             dialogo.show(fragmentManager, "tagAlerta");
         }
 
-        gridView = (GridView) findViewById(R.id.grid);
-        adaptador = new AdaptadorDeImagen(this, lista);
-        gridView.setAdapter(adaptador);
-        gridView.setOnItemClickListener(this);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -119,7 +136,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Imagen item = (Imagen) parent.getItemAtPosition(position);
 
-        Log.d("anim","Se ha seleccionado"+item.getDibujo());
+        Log.d("test","Se ha seleccionado"+item.getDibujo());
 
         Intent intent = new Intent(this, ActividadDetalle.class);
         intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getDibujo());

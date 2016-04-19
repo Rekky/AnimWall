@@ -56,6 +56,7 @@ public class ActividadDetalle extends AppCompatActivity {
     public void cargarImagenExtendida() {
         Picasso.with(getApplicationContext())
                 .load(getIntent().getStringExtra(EXTRA_PARAM_ID))
+                .placeholder(R.drawable.ic_menu_camera)
                 .into(imagenExtendida);
     }
 
@@ -76,12 +77,12 @@ public class ActividadDetalle extends AppCompatActivity {
 
             @Override
             public void onBitmapFailed(final Drawable errorDrawable) {
-                Log.d("TAG", "FAILED");
+                Log.d("test", "FAILED");
             }
 
             @Override
             public void onPrepareLoad(final Drawable placeHolderDrawable) {
-                Log.d("TAG", "Prepare Load");
+                Log.d("test", "Prepare Load");
             }
         });
 

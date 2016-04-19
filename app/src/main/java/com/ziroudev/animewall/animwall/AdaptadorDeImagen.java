@@ -14,14 +14,14 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 public class AdaptadorDeImagen extends BaseAdapter{
-    private Context context;
 
+    private Context context;
     private ArrayList<Imagen> urls = new ArrayList<Imagen>();
 
     public AdaptadorDeImagen(Context context, ArrayList<Imagen> lista){
         this.context = context;
         this.urls = lista;
-        Log.d("anim", "adapter:"+urls.get(0).getDibujo());
+        Log.d("test", "adapter:"+urls.get(0).getDibujo());
     }
 
     @Override
@@ -39,20 +39,24 @@ public class AdaptadorDeImagen extends BaseAdapter{
 
     @Override
     public View getView(int position, View view, ViewGroup viewGroup) {
+
         if (view == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.grid_item, viewGroup, false);
         }
 
-        ImageView miniImagen = (ImageView) view.findViewById(R.id.imagen_coche);
-        TextView nombreMiniImagen = (TextView) view.findViewById(R.id.nombre_coche);
+        final ImageView miniImagen = (ImageView) view.findViewById(R.id.imagen_coche);
+        final TextView nombreMiniImagen = (TextView) view.findViewById(R.id.nombre_coche);
 
         final Imagen item = getItem(position);
+
         Picasso.with(context)
                 .load(urls.get(position).getDibujo())
+                .placeholder(R.drawable.ic_menu_camera)
                 .into(miniImagen);
 
         nombreMiniImagen.setText(item.getNombre());
+
 
         return view;
     }

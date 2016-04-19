@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Anime" />
+            android:title="Wall 1" />
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Anime 2" />
+            android:title="Wall 2" />
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Anime 3" />
+            android:title="Wall 3" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Anime 4" />
+            android:title="Wall 4" />
     </group>
 
 
