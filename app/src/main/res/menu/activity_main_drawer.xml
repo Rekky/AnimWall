@@ -5,19 +5,19 @@
         <item
             android:id="@+id/nav_camera"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="Wall 1" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Wall 2" />
-        <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Wall 3" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Wall 4" />
+            android:title="Anime Girls" />
+        <!--<item-->
+            <!--android:id="@+id/nav_gallery"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Wall 2" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_slideshow"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Wall 3" />-->
+        <!--<item-->
+            <!--android:id="@+id/nav_manage"-->
+            <!--android:icon="@drawable/ic_menu_gallery"-->
+            <!--android:title="Wall 4" />-->
     </group>
 
 

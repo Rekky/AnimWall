@@ -23,16 +23,6 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.AdapterView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -40,8 +30,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     private GridView gridView;
     public AdaptadorDeImagen adaptador;
-    private String pathWeb = "http://192.168.0.211:81/generador/wallpapers.php";
-    private String pathImagenes = "http://192.168.0.211:81/generador/wallpapers/";
+    private String pathWeb = "http://pellejo.net46.net/index.php";
+    private String pathImagenes = "http://pellejo.net46.net/wallpapers/";
+//    private String pathWeb = "http://192.168.2.105:81/generador/wallpapers.php";
+//    private String pathImagenes = "http://192.168.2.105:81/generador/wallpapers/";
     public ArrayList<Imagen> lista = new ArrayList<Imagen>();
 
 
@@ -119,13 +111,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (id == R.id.nav_camera) {
             // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
