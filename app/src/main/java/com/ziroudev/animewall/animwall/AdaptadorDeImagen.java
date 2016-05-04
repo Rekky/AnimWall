@@ -46,7 +46,7 @@ public class AdaptadorDeImagen extends BaseAdapter{
         }
 
         final ImageView miniImagen = (ImageView) view.findViewById(R.id.imagen_coche);
-        final TextView nombreMiniImagen = (TextView) view.findViewById(R.id.nombre_coche);
+//        final TextView nombreMiniImagen = (TextView) view.findViewById(R.id.nombre_coche);
 
         final Imagen item = getItem(position);
 
@@ -55,7 +55,7 @@ public class AdaptadorDeImagen extends BaseAdapter{
                 .placeholder(R.drawable.ic_menu_camera)
                 .into(miniImagen);
 
-        nombreMiniImagen.setText(item.getNombre());
+//        nombreMiniImagen.setText(item.getNombre());
 
 
         return view;

@@ -1,9 +1,12 @@
 package com.ziroudev.animewall.animwall;
 
+import android.app.ProgressDialog;
 import android.app.WallpaperManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -11,9 +14,21 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
+
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 
 
 public class ActividadDetalle extends AppCompatActivity {
@@ -37,7 +52,7 @@ public class ActividadDetalle extends AppCompatActivity {
         cargarImagenExtendida();
 
 
-//        BUTTON FLOATING
+        //BUTTON FLOATING 1
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,9 +63,19 @@ public class ActividadDetalle extends AppCompatActivity {
             }
         });
 
+        //BUTTON FLOATING 2
+        FloatingActionButton des = (FloatingActionButton) findViewById(R.id.BtnDescargar);
+        des.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Wallpaper Descargado", Snackbar.LENGTH_LONG).setAction("Action", null).show();
+
+                descargarWallpaper();
+            }
+        });
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
-
 
 
     public void cargarImagenExtendida() {
@@ -61,7 +86,6 @@ public class ActividadDetalle extends AppCompatActivity {
     }
 
     public void ponerWallpaper(){
-        //cargo la imagen usando picasso
         Picasso.with(getApplicationContext()).load(URLPasada).into(new Target() {
 
             @Override
@@ -89,4 +113,71 @@ public class ActividadDetalle extends AppCompatActivity {
     }
 
 
+    public void descargarWallpaper(){
+        Log.d("test","entra en click");
+        Log.d("test","urlpasda"+URLPasada);
+        new DownloadFile().execute(URLPasada);
     }
+
+
+    class DownloadFile extends AsyncTask<String,Integer,Long> {
+        ProgressDialog mProgressDialog = new ProgressDialog(ActividadDetalle.this);// Change Mainactivity.this with your activity name.
+        String strFolderName;
+        InputStream input;
+        OutputStream output;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mProgressDialog.setMessage("Downloading");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.setMax(100);
+            mProgressDialog.setCancelable(true);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+            mProgressDialog.show();
+        }
+        @Override
+        protected Long doInBackground(String... aurl) {
+            int count;
+
+            try {
+                URL url = new URL((String) aurl[0]);
+                URLConnection conexion = url.openConnection();
+                conexion.connect();
+
+                String targetFileName="background"+".jpg";//Change name and subname
+                int lenghtOfFile = conexion.getContentLength();
+
+                File PATH = new File(getExternalFilesDir("wallpaper"), targetFileName);
+                
+                input = new BufferedInputStream(url.openStream());
+                output = new FileOutputStream(PATH);
+                byte data[] = new byte[1024];
+                long total = 0;
+
+                while ((count = input.read(data)) != -1) {
+                    total += count;
+                    publishProgress ((int)(total*100/lenghtOfFile));
+                    output.write(data, 0, count);
+                }
+                output.flush();
+                output.close();
+                input.close();
+            } catch (Exception e) {}
+            return null;
+        }
+        protected void onProgressUpdate(Integer... progress) {
+            mProgressDialog.setProgress(progress[0]);
+            if(mProgressDialog.getProgress()==mProgressDialog.getMax()){
+                mProgressDialog.dismiss();
+                Toast.makeText(getApplicationContext(), "File Downloaded", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        protected void onPostExecute(String result) {
+        }
+
+    }
+
+
+}
