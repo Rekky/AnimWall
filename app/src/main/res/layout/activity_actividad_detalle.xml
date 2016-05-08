@@ -31,7 +31,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_gallery"
         android:nestedScrollingEnabled="false"
-        app:backgroundTint="#cbda38"
+        app:backgroundTint="#7bd209"
         />
 
     <!--<android.support.design.widget.FloatingActionButton-->
@@ -42,7 +42,7 @@
         <!--android:layout_margin="@dimen/fab_margin"-->
         <!--android:src="@android:drawable/stat_sys_download"-->
         <!--android:nestedScrollingEnabled="false"-->
-        <!--app:backgroundTint="#cbda38"-->
+        <!--app:backgroundTint="#7bd209"-->
         <!--/>-->
 
 </android.support.design.widget.CoordinatorLayout>

@@ -46,7 +46,7 @@ public class ActividadDetalle extends AppCompatActivity {
         setContentView(R.layout.activity_actividad_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
+
 
         // Obtener el Imagen con el identificador establecido en la actividad principallll
         imagenExtendida = (ImageView) findViewById(R.id.imagen_extendida);
@@ -67,13 +67,13 @@ public class ActividadDetalle extends AppCompatActivity {
         });
 
         //BUTTON FLOATING 2
-        FloatingActionButton des = (FloatingActionButton) findViewById(R.id.BtnDescargar);
-        des.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                descargarWallpaper();
-            }
-        });
+//        FloatingActionButton des = (FloatingActionButton) findViewById(R.id.BtnDescargar);
+//        des.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                descargarWallpaper();
+//            }
+//        });
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
