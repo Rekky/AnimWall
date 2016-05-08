@@ -4,11 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
@@ -24,10 +21,6 @@ import android.view.MenuItem;
 import android.widget.GridView;
 import android.widget.AdapterView;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -130,10 +123,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Imagen item = (Imagen) parent.getItemAtPosition(position);
 
-        Log.d("test","Se ha seleccionado"+item.getDibujo());
+        Log.d("test","Se ha seleccionado"+item.getImagen());
 
         Intent intent = new Intent(this, ActividadDetalle.class);
-        intent.putExtra(ActividadDetalle.EXTRA_PARAM_ID, item.getDibujo());
+        intent.putExtra(ActividadDetalle.EXTRA_PARAM_IMG, item.getImagen());
+        intent.putExtra(ActividadDetalle.EXTRA_PARAM_NOM, item.getNombre());
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             ActivityOptionsCompat activityOptions =

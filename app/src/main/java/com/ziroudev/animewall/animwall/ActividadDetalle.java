@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -21,22 +22,22 @@ import com.squareup.picasso.Target;
 
 import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.net.URL;
 import java.net.URLConnection;
 
 
 public class ActividadDetalle extends AppCompatActivity {
 
-    public static final String EXTRA_PARAM_ID = "com.ziroudev.extra.ID";
+    public static final String EXTRA_PARAM_IMG = "com.ziroudev.extra.ID";
+    public static final String EXTRA_PARAM_NOM = "com.ziroudev.extra.NOM";
     public static final String VIEW_NAME_HEADER_IMAGE = "imagen_compartida";
     private ImageView imagenExtendida;
     private String URLPasada;
+    private String NOMPasada;
 
 
     @Override
@@ -45,10 +46,12 @@ public class ActividadDetalle extends AppCompatActivity {
         setContentView(R.layout.activity_actividad_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         // Obtener el Imagen con el identificador establecido en la actividad principallll
         imagenExtendida = (ImageView) findViewById(R.id.imagen_extendida);
-        URLPasada = getIntent().getStringExtra(EXTRA_PARAM_ID);
+        URLPasada = getIntent().getStringExtra(EXTRA_PARAM_IMG);
+        NOMPasada = getIntent().getStringExtra(EXTRA_PARAM_NOM);
         cargarImagenExtendida();
 
 
@@ -68,8 +71,6 @@ public class ActividadDetalle extends AppCompatActivity {
         des.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Wallpaper Descargado", Snackbar.LENGTH_LONG).setAction("Action", null).show();
-
                 descargarWallpaper();
             }
         });
@@ -80,7 +81,7 @@ public class ActividadDetalle extends AppCompatActivity {
 
     public void cargarImagenExtendida() {
         Picasso.with(getApplicationContext())
-                .load(getIntent().getStringExtra(EXTRA_PARAM_ID))
+                .load(getIntent().getStringExtra(EXTRA_PARAM_IMG))
                 .placeholder(R.drawable.ic_menu_camera)
                 .into(imagenExtendida);
     }
@@ -145,11 +146,11 @@ public class ActividadDetalle extends AppCompatActivity {
                 URLConnection conexion = url.openConnection();
                 conexion.connect();
 
-                String targetFileName="background"+".jpg";//Change name and subname
+                String targetFileName="bg_"+NOMPasada+".jpg";//Change name and subname
                 int lenghtOfFile = conexion.getContentLength();
 
                 File PATH = new File(getExternalFilesDir("wallpaper"), targetFileName);
-                
+
                 input = new BufferedInputStream(url.openStream());
                 output = new FileOutputStream(PATH);
                 byte data[] = new byte[1024];

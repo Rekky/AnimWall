@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -21,7 +20,7 @@ public class AdaptadorDeImagen extends BaseAdapter{
     public AdaptadorDeImagen(Context context, ArrayList<Imagen> lista){
         this.context = context;
         this.urls = lista;
-        Log.d("test", "adapter:"+urls.get(0).getDibujo());
+        Log.d("test", "adapter:"+urls.get(0).getImagen());
     }
 
     @Override
@@ -51,7 +50,7 @@ public class AdaptadorDeImagen extends BaseAdapter{
         final Imagen item = getItem(position);
 
         Picasso.with(context)
-                .load(urls.get(position).getDibujo())
+                .load(urls.get(position).getImagen())
                 .placeholder(R.drawable.ic_menu_camera)
                 .into(miniImagen);
 

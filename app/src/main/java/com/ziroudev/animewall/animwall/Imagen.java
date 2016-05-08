@@ -18,7 +18,7 @@ public class Imagen {
         return nombre;
     }
 
-    public String getDibujo() {
+    public String getImagen() {
         return dibujo;
     }
 

@@ -31,18 +31,18 @@
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_gallery"
         android:nestedScrollingEnabled="false"
-        app:backgroundTint="#1698c8"
+        app:backgroundTint="#cbda38"
         />
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/BtnDescargar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|left"
-        android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/stat_sys_download"
-        android:nestedScrollingEnabled="false"
-        app:backgroundTint="#1698c8"
-        />
+    <!--<android.support.design.widget.FloatingActionButton-->
+        <!--android:id="@+id/BtnDescargar"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="bottom|left"-->
+        <!--android:layout_margin="@dimen/fab_margin"-->
+        <!--android:src="@android:drawable/stat_sys_download"-->
+        <!--android:nestedScrollingEnabled="false"-->
+        <!--app:backgroundTint="#cbda38"-->
+        <!--/>-->
 
 </android.support.design.widget.CoordinatorLayout>
