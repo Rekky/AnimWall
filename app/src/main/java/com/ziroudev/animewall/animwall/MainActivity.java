@@ -6,22 +6,28 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
-import android.util.Log;
-import android.view.View;
-import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
-import android.widget.GridView;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.GridView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, AdapterView.OnItemClickListener {
@@ -35,17 +41,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public ArrayList<Imagen> lista = new ArrayList<Imagen>();
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        File file = new File(getExternalFilesDir("DIRECTORY_PICTURES"), "DemoFile.jpg");
-
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            // Operaciones http
+
+            // ADBanner
+            AdView mAdView = (AdView) findViewById(R.id.adView);
+            AdRequest adRequestBanner = new AdRequest.Builder().build();
+            mAdView.loadAd(adRequestBanner);
+
 
             Log.d("test","SE INICIA LA APP");
 
@@ -76,7 +86,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
 
 
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -91,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
 
     }
+
 
     @Override
     public void onBackPressed() {
@@ -121,24 +131,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Imagen item = (Imagen) parent.getItemAtPosition(position);
 
-        Log.d("test","Se ha seleccionado"+item.getImagen());
+            Imagen item = (Imagen) parent.getItemAtPosition(position);
 
-        Intent intent = new Intent(this, ActividadDetalle.class);
-        intent.putExtra(ActividadDetalle.EXTRA_PARAM_IMG, item.getImagen());
-        intent.putExtra(ActividadDetalle.EXTRA_PARAM_NOM, item.getNombre());
+            Log.d("test","Se ha seleccionado"+item.getImagen());
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ActivityOptionsCompat activityOptions =
-                    ActivityOptionsCompat.makeSceneTransitionAnimation(
-                            this,
-                            new Pair<View, String>(view.findViewById(R.id.imagen_coche),
-                            ActividadDetalle.VIEW_NAME_HEADER_IMAGE)
-                    );
-            ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
-        } else
-            startActivity(intent);
-    }
+            Intent intent = new Intent(this, ActividadDetalle.class);
+            intent.putExtra(ActividadDetalle.EXTRA_PARAM_IMG, item.getImagen());
+            intent.putExtra(ActividadDetalle.EXTRA_PARAM_NOM, item.getNombre());
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ActivityOptionsCompat activityOptions =
+                        ActivityOptionsCompat.makeSceneTransitionAnimation(
+                                this,
+                                new Pair<View, String>(view.findViewById(R.id.imagen_coche),
+                                        ActividadDetalle.VIEW_NAME_HEADER_IMAGE)
+                        );
+                ActivityCompat.startActivity(this, intent, activityOptions.toBundle());
+            } else
+                startActivity(intent);
+
+
+}
 
 }

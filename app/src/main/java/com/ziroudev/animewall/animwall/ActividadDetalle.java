@@ -17,6 +17,9 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -39,14 +42,12 @@ public class ActividadDetalle extends AppCompatActivity {
     private String URLPasada;
     private String NOMPasada;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         // Obtener el Imagen con el identificador establecido en la actividad principallll
         imagenExtendida = (ImageView) findViewById(R.id.imagen_extendida);
@@ -87,6 +88,7 @@ public class ActividadDetalle extends AppCompatActivity {
     }
 
     public void ponerWallpaper(){
+
         Picasso.with(getApplicationContext()).load(URLPasada).into(new Target() {
 
             @Override
