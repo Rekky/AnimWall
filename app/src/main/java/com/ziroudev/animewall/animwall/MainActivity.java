@@ -6,6 +6,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
@@ -16,14 +17,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
@@ -36,10 +36,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public AdaptadorDeImagen adaptador;
     private String pathWeb = "http://pellejo.net46.net/index.php";
     private String pathImagenes = "http://pellejo.net46.net/wallpapers/";
-//    private String pathWeb = "http://192.168.2.105:81/generador/wallpapers.php";
-//    private String pathImagenes = "http://192.168.2.105:81/generador/wallpapers/";
+//    private String pathWeb = "http://192.168.0.201:81/pellejo/index.php";
+//    private String pathImagenes = "http://192.168.0.201:81/pellejo/wallpapers/";
     public ArrayList<Imagen> lista = new ArrayList<Imagen>();
-
 
 
     @Override
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             mAdView.loadAd(adRequestBanner);
 
 
+
             Log.d("test","SE INICIA LA APP");
 
             try {
@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 dwf.pathWeb = pathWeb;
                 dwf.pathImagenes = pathImagenes;
                 lista = dwf.execute().get();
-//
+
 //                Log.d("anim","ELOBJECTO_IMG:"+lista.get(1));
 
             } catch (Exception e) {
