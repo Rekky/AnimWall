@@ -42,12 +42,29 @@ public class ActividadDetalle extends AppCompatActivity {
     private String URLPasada;
     private String NOMPasada;
 
+    //========= AD INTERSITIAL ==========//
+    InterstitialAd mInterstitialAd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_actividad_detalle);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
+        // ======= AD INTERSITIAL =========//
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId("ca-app-pub-1593828267033743/8062593717");
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        mInterstitialAd.loadAd(adRequest);
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            public void onAdLoaded() {
+                muestraInterstitial();
+            }
+        });
 
         // Obtener el Imagen con el identificador establecido en la actividad principallll
         imagenExtendida = (ImageView) findViewById(R.id.imagen_extendida);
@@ -113,6 +130,12 @@ public class ActividadDetalle extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void muestraInterstitial() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
     }
 
 
